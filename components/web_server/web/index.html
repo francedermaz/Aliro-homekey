@@ -6,11 +6,17 @@
 <title>Aliro HomeKey</title>
 <style>
 /*
- * Styled after HomeKey-ESP32 (MIT, (c) rednblkx), which builds its UI with
- * Svelte + Tailwind + DaisyUI 5. Firmware cannot ship a bundler, so the
- * DaisyUI component classes used there are reproduced here by hand, with the
- * token values taken verbatim from DaisyUI's `dracula` theme file. Same class
- * names, same look, no build step.
+ * A reader's own palette, not DaisyUI's `dracula` this was originally styled
+ * after (MIT, (c) rednblkx, HomeKey-ESP32). The component shapes and class
+ * names are still theirs; the colours are not -- dracula's signature pink and
+ * violet made even the neutral backgrounds read faintly purple (they shared
+ * its hue), which is a strange first impression for a door lock's own admin
+ * page. Replaced with a true cool slate base and a single technical blue
+ * accent -- the kind of palette a physical security product's own app uses,
+ * not a code editor's. One accent colour, used the same way everywhere on
+ * the page (buttons, focus rings, links, the active nav item); status colours
+ * (success/warning/error/info) are untouched, since green/amber/red/cyan
+ * already meant the right things and were never the complaint.
  *
  * One theme, always dark. There is no switcher and no light palette: this page
  * is a wall-mounted reader's configuration screen, not a site someone reads for
@@ -22,17 +28,17 @@
      only colours the page has, so nothing about the host's preference should
      be able to change them. */
   color-scheme:dark;
-  --color-base-100:oklch(28.822% 0.022 277.508);
-  --color-base-200:oklch(26.805% 0.02 277.508);
-  --color-base-300:oklch(24.787% 0.019 277.508);
-  --color-base-content:oklch(97.747% 0.007 106.545);
-  --color-primary:oklch(75.461% 0.183 346.812);
-  --color-primary-content:oklch(15.092% 0.036 346.812);
-  --color-secondary:oklch(74.202% 0.148 301.883);
-  --color-accent:oklch(83.392% 0.124 66.558);
-  --color-neutral:oklch(39.445% 0.032 275.524);
-  --color-neutral-content:oklch(87.889% 0.006 275.524);
-  --color-info:oklch(88.263% 0.093 212.846);
+  --color-base-100:oklch(28.822% 0.008 255);
+  --color-base-200:oklch(26.805% 0.007 255);
+  --color-base-300:oklch(24.787% 0.007 255);
+  --color-base-content:oklch(97.747% 0.004 255);
+  --color-primary:oklch(72.4% 0.15 256);
+  --color-primary-content:oklch(14% 0.03 256);
+  --color-secondary:oklch(74.5% 0.1 195);
+  --color-accent:oklch(80.2% 0.13 70);
+  --color-neutral:oklch(39.445% 0.014 255);
+  --color-neutral-content:oklch(87.889% 0.004 255);
+  --color-info:oklch(85.5% 0.09 213);
   --color-success:oklch(87.099% 0.219 148.024);
   --color-success-content:oklch(17.419% 0.043 148.024);
   --color-warning:oklch(95.533% 0.134 112.757);
@@ -530,11 +536,8 @@ main{padding:0 1.5rem 1.5rem;height:100%;overflow-y:auto;background:var(--color-
                 </div>
                 <dl id="st_capacity"></dl>
                 <div id="capacity_warning" class="alert alert-warning hidden"></div>
-                <p class="text-xs text-muted">Fabrics and HomeKey slots are fixed when this firmware
-                  was built; adding more needs a different build, not a setting. Free memory is what
-                  actually decides whether one more ecosystem or credential will work -- it is measured
-                  live, and the number that matters is how low it has gone, not how much is free right
-                  now.</p>
+                <p class="text-xs text-muted">Limits are fixed at build time. Free memory is live and
+                  matters more than the counts above.</p>
               </div>
             </div>
             <div class="card hidden" id="matter_card">
@@ -1643,22 +1646,13 @@ function renderCapacity(matter, device) {
 
   if (fabricsFull) {
     warn.className = "alert alert-error";
-    warn.innerHTML = `<div><b>No fabric slots left.</b> This build supports ${cap.max_fabrics}
-      commissioned ecosystems and all of them are in use. Adding another means removing one first,
-      or building firmware with a higher CONFIG_MAX_FABRICS -- which costs more memory per fabric
-      added, and this device is already ${heapWarn ? "close to" : "using"} its limit below.</div>`;
+    warn.innerHTML = `<div><b>No fabric slots left.</b> Remove one, or build with a higher limit.</div>`;
   } else if (heapDanger) {
     warn.className = "alert alert-error";
-    warn.innerHTML = `<div><b>Free memory has dropped to a level where commissioning and taps have
-      failed on this firmware.</b> Adding another fabric or credential now is likely to make that
-      worse, not better. Reboot before trying, and see
-      <a class="link" href="https://github.com/Ruhanpaco/Aliro-homekey/issues/13" target="_blank"
-         rel="noopener noreferrer">issue #13</a> for what is driving this.</div>`;
+    warn.innerHTML = `<div><b>Free memory is critically low.</b> Reboot before adding anything.</div>`;
   } else if (heapWarn) {
     warn.className = "alert alert-warning";
-    warn.innerHTML = `<div><b>Free memory is getting tight.</b> Adding one more fabric or a busy
-      ecosystem reconnecting could push this into the range where taps and commissioning have
-      failed on other boards. Not urgent yet, worth watching.</div>`;
+    warn.innerHTML = `<div><b>Free memory is getting tight.</b> Worth watching.</div>`;
   } else {
     warn.classList.add("hidden");
     return;
