@@ -11,6 +11,7 @@
 #include <esp_check.h>
 #include <esp_log.h>
 #include <esp_mac.h>
+#include <esp_random.h>
 #include <nvs.h>
 #include <nvs_flash.h>
 #include <sdkconfig.h>
@@ -95,12 +96,45 @@ static nfc_bus_t bus_from_name(const char *s, nfc_bus_t fallback)
 
 /* --- defaults ------------------------------------------------------------ */
 
+/*
+ * A random identifier, not the empty Kconfig default itself. Every board that
+ * never had this Kconfig option set would otherwise carry the same all-zero
+ * (or whatever fixed value a source tree shipped) identifier out of the box,
+ * which was exactly the risk this replaces: a value published in a public
+ * repo is not a secret, and this is bound into every credential a phone
+ * issues against this reader.
+ *
+ * esp_fill_random() draws from the hardware RNG (RF-noise-seeded once Wi-Fi
+ * or Bluetooth has run at least once, a HW entropy source before that) --
+ * not something to seed by hand, and it needs no init call.
+ */
+static void generate_random_group_id(char *out, size_t out_len)
+{
+    uint8_t bytes[16];
+    esp_fill_random(bytes, sizeof(bytes));
+    for (size_t i = 0; i < sizeof(bytes) && out_len >= (i + 1) * 2 + 1; i++) {
+        snprintf(out + i * 2, 3, "%02X", bytes[i]);
+    }
+}
+
 void app_config_defaults(app_config_t *out)
 {
     memset(out, 0, sizeof(*out));
 
     snprintf(out->device_name, sizeof(out->device_name), "%s", CONFIG_ALIRO_DEFAULT_DEVICE_NAME);
-    snprintf(out->group_id_hex, sizeof(out->group_id_hex), "%s", CONFIG_ALIRO_READER_GROUP_ID);
+
+    /*
+     * Blank Kconfig value (the shipped default) means generate one per
+     * device. A non-blank value means someone deliberately built this image
+     * to share an identifier across a fleet of readers -- a multi-door
+     * installation where one HomeKey should open every door -- and that
+     * choice is respected rather than overridden.
+     */
+    if (CONFIG_ALIRO_READER_GROUP_ID[0] == '\0') {
+        generate_random_group_id(out->group_id_hex, sizeof(out->group_id_hex));
+    } else {
+        snprintf(out->group_id_hex, sizeof(out->group_id_hex), "%s", CONFIG_ALIRO_READER_GROUP_ID);
+    }
 
     out->nfc.chip = NFC_CHIP_NONE;
     out->nfc.bus = NFC_BUS_SPI;

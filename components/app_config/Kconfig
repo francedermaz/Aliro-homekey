@@ -7,12 +7,27 @@ config ALIRO_DEFAULT_DEVICE_NAME
     default "aliro-homekey"
 
 config ALIRO_READER_GROUP_ID
-    string "Reader group identifier (32 hex chars)"
-    default "00112233445566778899AABBCCDDEEFF"
+    string "Reader group identifier (32 hex chars, blank = generate one per device)"
+    default ""
     help
         16-byte Reader Group Identifier. Identifies this installation to user
-        devices; every reader in the same lock group shares it. Change it
-        before deploying anything real.
+        devices; every reader in the same lock group shares it.
+
+        Left blank, which is the default: every board gets its own random
+        identifier, generated once from the hardware RNG on first boot. This
+        used to default to a fixed value shipped in the public source tree --
+        every out-of-box board carried the identical, publicly known
+        identifier until someone changed it, which is a real risk for
+        anything with "unlock" in its job description and nobody should have
+        to remember to change on day one.
+
+        Set this only if you deliberately want every reader from this exact
+        build to share one identifier -- a multi-door installation (a
+        hackerspace, an office) where one HomeKey should open every door.
+        For that case this is a shortcut, not the only way in: the identifier
+        is also an editable runtime setting in the web UI's Config page, so
+        the same result is reachable by pasting one value into each reader
+        after flashing, without baking it into the build at all.
 
 menu "NFC frontend"
 
