@@ -1692,12 +1692,8 @@ function renderStatus(s) {
   ]);
   rows("st_device", [
     ["Chip", `${s.device.target} rev ${s.device.revision}`],
-    ["Cores", s.device.cores],
     ["Firmware", s.device.firmware],
-    ["ESP-IDF", s.device.idf],
     ["Uptime", uptime],
-    ["Free Heap", `${(s.device.free_heap / 1024).toFixed(1)} KB`],
-    ["Heap Low Water", `${(s.device.min_free_heap / 1024).toFixed(1)} KB`],
   ]);
 
     /* Absent in a build without Matter, which is the default one. */
