@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b0d10">
+<meta name="theme-color" content="#f4f2ec">
 <meta name="description" content="Aliro HomeKey hardware: supported ESP32 targets, PN532 NFC frontend, wiring, and lock output.">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://ruhanpaco.github.io/aliro-homekey/hardware.html">
+<link rel="canonical" href="https://ruhanpaco.github.io/Aliro-homekey/hardware.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hardware · Aliro HomeKey">
 <meta property="og:description" content="ESP32 targets, NFC frontend, buses, lock output and board support tiers.">
-<meta property="og:url" content="https://ruhanpaco.github.io/aliro-homekey/hardware.html">
-<meta property="og:image" content="https://ruhanpaco.github.io/aliro-homekey/assets/aliro-mark.svg">
+<meta property="og:url" content="https://ruhanpaco.github.io/Aliro-homekey/hardware.html">
+<meta property="og:image" content="https://ruhanpaco.github.io/Aliro-homekey/assets/aliro-mark.svg">
 <link rel="icon" href="assets/aliro-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,560;0,9..144,640;1,9..144,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=20260908">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=20260909">
 <title>Hardware · Aliro HomeKey</title>
 </head>
 <body>
@@ -25,10 +25,10 @@
 <header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="index.html" aria-label="Aliro HomeKey home">
-      <img src="assets/aliro-mark.svg" alt="" width="30" height="30">
+      <img src="assets/aliro-mark.svg" alt="" width="28" height="28">
       <span>ALIRO <em>HOMEKEY</em></span>
     </a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">MENU</button>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
     <nav class="site-nav" id="primary-nav" aria-label="Primary">
       <a class="nav-link" href="index.html">Overview</a>
       <a class="nav-link" href="architecture.html">Architecture</a>
@@ -36,8 +36,7 @@
       <a class="nav-link" href="roadmap.html">Roadmap</a>
       <a class="nav-link" href="releases.html">Versions</a>
       <span class="nav-cta">
-        <a class="btn ghost small" href="https://github.com/Ruhanpaco/Aliro-homekey">GitHub ↗</a>
-        <a class="btn primary small" href="site/index.html">Open Flasher</a>
+        <a class="btn primary small" href="https://github.com/Ruhanpaco/Aliro-homekey">GitHub ↗</a>
       </span>
     </nav>
   </div>
@@ -45,36 +44,35 @@
 
 <main id="main" class="wrap">
   <section class="page-hero">
-    <p class="crumbs"><a href="index.html">Home</a> / 02 · Hardware</p>
     <h1>What runs it, <em>and how sure we are.</em></h1>
     <p class="lead">Board support here comes in three honest tiers: hardware-tested, built-and-released-but-untested, and SDK-supported-but-no-board-work. Which tier a target is in matters more than whether it&rsquo;s listed at all.</p>
   </section>
 
   <section class="section">
     <div class="section-head">
-      <p class="kicker">Board support</p>
       <h2>Three tiers, not one list.</h2>
     </div>
-    <article class="tier">
-      <span class="status good">Hardware-tested</span>
-      <h3>ESP32-WROOM-32</h3>
-      <p>The primary development and transaction-testing platform. Commissioned into Apple Home, ran real Aliro transactions, drove a lock output &mdash; everything under <a href="index.html">Overview</a> was verified on this exact board with a PN532 over SPI.</p>
-    </article>
-    <article class="tier">
-      <span class="status warn">Builds and releases · not hardware-verified</span>
-      <h3>ESP32-C3 · ESP32-S3</h3>
-      <p>CI builds and publishes firmware for both on every release, and both pass the OTA-slot-fit check. Pin defaults exist in <code class="inline">boards/</code> and <code class="inline">components/app_config/Kconfig</code>. Neither has been flashed to real hardware by this project &mdash; treat as unverified until someone confirms a tap actually opens a lock.</p>
-    </article>
-    <article class="tier">
-      <span class="status idle">SDK-supported · no board work here</span>
-      <h3>ESP32-C6 · ESP32-H2 · ESP32-P4</h3>
-      <p>Espressif&rsquo;s Aliro SDK targets these chips, so this project could extend to them, but no dedicated release build, partition tuning, or testing exists in this repository yet for any of them.</p>
-    </article>
+    <div class="rows">
+      <article>
+        <p class="fact-line"><strong>ESP32-WROOM-32</strong> · hardware-tested</p>
+        <h3>The primary development and transaction-testing platform.</h3>
+        <p>Commissioned into Apple Home, ran real Aliro transactions, drove a lock output &mdash; everything under <a href="index.html">Overview</a> was verified on this exact board with a PN532 over SPI.</p>
+      </article>
+      <article>
+        <p class="fact-line"><strong>ESP32-C3 · ESP32-S3</strong> · builds and releases, not hardware-verified</p>
+        <h3>Real builds, unverified taps.</h3>
+        <p>CI builds and publishes firmware for both on every release, and both pass the OTA-slot-fit check. Pin defaults exist in <code class="inline">boards/</code> and <code class="inline">components/app_config/Kconfig</code>. Neither has been flashed to real hardware by this project &mdash; treat as unverified until someone confirms a tap actually opens a lock.</p>
+      </article>
+      <article>
+        <p class="fact-line"><strong>ESP32-C6 · ESP32-H2 · ESP32-P4</strong> · SDK-supported, no board work here</p>
+        <h3>Possible, not started.</h3>
+        <p>Espressif&rsquo;s Aliro SDK targets these chips, so this project could extend to them, but no dedicated release build, partition tuning, or testing exists in this repository yet for any of them.</p>
+      </article>
+    </div>
   </section>
 
-  <section class="section band">
+  <section class="section">
     <div class="section-head">
-      <p class="kicker">Typical setup</p>
       <h2>ESP32 + PN532 + a lock output.</h2>
     </div>
     <div class="codeblock">
@@ -93,16 +91,15 @@
        Mobile wallet</pre>
     </div>
     <div class="grid two" style="margin-top:22px">
-      <article class="card"><span class="step">Board</span><h3>ESP32 board</h3><p>WROOM-32 or another supported target. USB for flashing and monitoring.</p></article>
-      <article class="card"><span class="step">NFC</span><h3>PN532 module</h3><p>SPI (default) or I&sup2;C, over 4&ndash;6 wires. See wiring pins below.</p></article>
-      <article class="card"><span class="step">Output</span><h3>Access output</h3><p>A relay, electric strike, lock controller, or an LED for bench testing.</p></article>
-      <article class="card"><span class="step">Power</span><h3>3.3V logic</h3><p>3.3V logic only for the PN532 &mdash; do not feed it 5V.</p></article>
+      <article class="card"><h3>ESP32 board</h3><p>WROOM-32 or another supported target. USB for flashing and monitoring.</p></article>
+      <article class="card"><h3>PN532 module</h3><p>SPI (default) or I&sup2;C, over 4&ndash;6 wires. See wiring pins below.</p></article>
+      <article class="card"><h3>Access output</h3><p>A relay, electric strike, lock controller, or an LED for bench testing.</p></article>
+      <article class="card"><h3>Power</h3><p>3.3V logic only for the PN532 &mdash; do not feed it 5V.</p></article>
     </div>
   </section>
 
   <section class="section">
     <div class="section-head">
-      <p class="kicker">Default wiring</p>
       <h2>PN532 over SPI, ESP32-WROOM-32.</h2>
       <p class="lead">First-boot defaults &mdash; every pin is remappable from the web UI without a rebuild, and the device refuses wiring that doesn&rsquo;t exist on the target or is already assigned elsewhere.</p>
     </div>
@@ -119,7 +116,7 @@
         </tbody>
       </table>
     </div>
-    <div class="callout warn"><strong>Watch the silkscreen.</strong> Some PN532 breakout boards reuse the I&sup2;C pin labels for SPI too &mdash; the pin labelled <code class="inline">SDA</code> is actually <code class="inline">SS/CS</code>, and <code class="inline">SCL</code> is actually <code class="inline">SCK</code>. Wire by position, not by label, if that&rsquo;s what your board has.</div>
+    <div class="callout"><strong>Watch the silkscreen.</strong> Some PN532 breakout boards reuse the I&sup2;C pin labels for SPI too &mdash; the pin labelled <code class="inline">SDA</code> is actually <code class="inline">SS/CS</code>, and <code class="inline">SCL</code> is actually <code class="inline">SCK</code>. Wire by position, not by label, if that&rsquo;s what your board has.</div>
   </section>
 </main>
 

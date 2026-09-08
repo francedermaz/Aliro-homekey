@@ -3,23 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b0d10">
+<meta name="theme-color" content="#f4f2ec">
 <meta name="description" content="Aliro HomeKey is an open-source ESP32 Aliro reader for digital access credentials, with NFC, Matter Door Lock, web configuration and real hardware testing.">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://ruhanpaco.github.io/aliro-homekey/">
+<link rel="canonical" href="https://ruhanpaco.github.io/Aliro-homekey/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Aliro HomeKey · Open-source access control">
 <meta property="og:description" content="An open-source Aliro reader for ESP32, combining NFC, Matter, provisioning and embedded access control.">
-<meta property="og:url" content="https://ruhanpaco.github.io/aliro-homekey/">
-<meta property="og:image" content="https://ruhanpaco.github.io/aliro-homekey/assets/aliro-mark.svg">
+<meta property="og:url" content="https://ruhanpaco.github.io/Aliro-homekey/">
+<meta property="og:image" content="https://ruhanpaco.github.io/Aliro-homekey/assets/aliro-mark.svg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Aliro HomeKey">
 <meta name="twitter:description" content="Open-source Aliro access control on ESP32.">
 <link rel="icon" href="assets/aliro-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,560;0,9..144,640;1,9..144,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=20260908">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=20260909">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"Aliro HomeKey","description":"An open-source Aliro reader for ESP32 with NFC, Matter Door Lock integration, provisioning and web configuration.","codeRepository":"https://github.com/Ruhanpaco/Aliro-homekey","programmingLanguage":["C","C++","HTML","JavaScript"],"license":"https://www.apache.org/licenses/LICENSE-2.0","version":"0.5-beta","author":{"@type":"Person","name":"Ruhan Pacolli"},"operatingSystem":"ESP-IDF"}</script>
 <title>Aliro HomeKey · Open-source access control</title>
 </head>
@@ -29,10 +29,10 @@
 <header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="index.html" aria-label="Aliro HomeKey home">
-      <img src="assets/aliro-mark.svg" alt="" width="30" height="30">
+      <img src="assets/aliro-mark.svg" alt="" width="28" height="28">
       <span>ALIRO <em>HOMEKEY</em></span>
     </a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">MENU</button>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
     <nav class="site-nav" id="primary-nav" aria-label="Primary">
       <a class="nav-link" href="index.html" aria-current="page">Overview</a>
       <a class="nav-link" href="architecture.html">Architecture</a>
@@ -40,101 +40,78 @@
       <a class="nav-link" href="roadmap.html">Roadmap</a>
       <a class="nav-link" href="releases.html">Versions</a>
       <span class="nav-cta">
-        <a class="btn ghost small" href="https://github.com/Ruhanpaco/Aliro-homekey">GitHub ↗</a>
-        <a class="btn primary small" href="site/index.html">Open Flasher</a>
+        <a class="btn primary small" href="https://github.com/Ruhanpaco/Aliro-homekey">GitHub ↗</a>
       </span>
     </nav>
   </div>
 </header>
 
 <main id="main">
-  <!-- Hero -->
   <section class="wrap hero">
     <div>
-      <p class="kicker rise">Open-source access control · ESP32</p>
-      <h1 class="display rise d1">One reader.<br><span class="thin">Open standards.</span></h1>
-      <p class="lead rise d2">Aliro HomeKey is an open-source ESP32 reader built around Aliro, the Connectivity Standards Alliance&rsquo;s cross-wallet access credential standard &mdash; Apple, Google, and Samsung all speak it, so the reader isn&rsquo;t locked to one ecosystem.</p>
-      <div class="hero-actions rise d3">
+      <h1 class="display">One reader.<br><em>Open standards.</em></h1>
+      <p class="lead">Aliro HomeKey is an open-source ESP32 reader built around Aliro, the Connectivity Standards Alliance&rsquo;s cross-wallet access credential standard &mdash; Apple, Google, and Samsung all speak it, so the reader isn&rsquo;t locked to one ecosystem.</p>
+      <div class="hero-actions">
         <a class="btn primary" href="https://github.com/Ruhanpaco/Aliro-homekey/releases">Get v0.5 beta ↗</a>
         <a class="btn ghost" href="first-test.html">Flash &amp; test</a>
       </div>
-      <div class="hero-note rise d4" role="note">
-        <span aria-hidden="true">◉</span>
-        <span><strong>Current state · v0.5 beta.</strong> Verified end to end on an ESP32-WROOM-32 with a PN532: commissioned into Apple Home, an Aliro credential provisioned over Matter, a tap opening the lock on both the fast (~569&nbsp;ms) and standard (~2047&nbsp;ms) transaction paths. Firmware also builds and releases for ESP32-C3 and ESP32-S3, though only the WROOM-32 has been run on real hardware.</span>
-      </div>
+      <p class="hero-note"><strong>Current state · v0.5 beta.</strong> Verified end to end on an ESP32-WROOM-32 with a PN532: commissioned into Apple Home, an Aliro credential provisioned over Matter, a tap opening the lock on both the fast (~569&nbsp;ms) and standard (~2047&nbsp;ms) transaction paths. Firmware also builds and releases for ESP32-C3 and ESP32-S3, though only the WROOM-32 has been run on real hardware.</p>
     </div>
-    <div class="reader-stage rise d2" aria-label="Reader status illustration">
-      <div class="reader-screen">
-        <div class="nfc-mark" aria-hidden="true">
-          <i></i><i></i><i></i>
-          <img src="assets/aliro-mark.svg" alt="">
-        </div>
-      </div>
-      <div class="reader-meta">
-        <span class="tag">ESP32 / C3 / S3 · v0.5 beta</span>
-        <span class="live">Reader ready</span>
-      </div>
-      <div class="tap-log" aria-label="Example tap log">
-        <div><span class="t">[tap]</span> credential <b>recognised</b> · fast path · 569 ms</div>
-        <div><span class="t">[tap]</span> credential <b>recognised</b> · standard path · 2047 ms</div>
-        <div><span class="t">[lock]</span> output driven · GPIO 2 · relock in 3 s</div>
-      </div>
-    </div>
+    <dl class="facts" aria-label="Project facts">
+      <div><dt>Latest release</dt><dd>v0.5 beta</dd></div>
+      <div><dt>Targets</dt><dd>ESP32 · C3 · S3</dd></div>
+      <div><dt>Fastest verified tap</dt><dd>569 ms</dd></div>
+      <div><dt>License</dt><dd>Apache-2.0</dd></div>
+    </dl>
   </section>
 
-  <!-- Stats -->
   <section class="wrap" aria-label="Project at a glance">
     <div class="stats">
-      <div><b>v0.5 <em>β</em></b><span>Latest beta</span></div>
-      <div><b>3</b><span>Released targets</span></div>
-      <div><b>569 ms</b><span>Fastest verified tap</span></div>
-      <div><b>Apache-2.0</b><span>License</span></div>
+      <div><b>v0.5</b><span>latest beta</span></div>
+      <div><b>3</b><span>released targets</span></div>
+      <div><b>569 ms</b><span>fastest verified tap</span></div>
+      <div><b>Apache-2.0</b><span>license</span></div>
     </div>
   </section>
 
-  <!-- What it is -->
-  <section class="section band">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="kicker">What it is</p>
-        <h2>A reader, not a vendor silo.</h2>
-        <p class="lead">Aliro provides the common access protocol. The ESP32 supplies the embedded platform. This project supplies the glue: NFC transport, credential storage, access policy, lock output, provisioning, configuration, and integrations.</p>
-      </div>
-      <div class="grid four">
-        <article class="card feature"><span class="step">01</span><span class="glyph" aria-hidden="true">⌁</span><h3>Phone / credential</h3><p>A wallet holding an Aliro credential &mdash; Apple, Google, or Samsung &mdash; begins the tap.</p></article>
-        <article class="card feature"><span class="step">02</span><span class="glyph" aria-hidden="true">◌</span><h3>NFC transport</h3><p>A PN532 frontend carries the ISO&nbsp;14443-4 interaction to the reader over SPI or I&sup2;C.</p></article>
-        <article class="card feature"><span class="step">03</span><span class="glyph" aria-hidden="true">▣</span><h3>Aliro reader</h3><p>Espressif&rsquo;s Aliro SDK handles authentication, transaction state, and credential identity.</p></article>
-        <article class="card feature"><span class="step">04</span><span class="glyph" aria-hidden="true">✓</span><h3>Access control</h3><p>This project decides whether a credential is allowed, then drives the lock output.</p></article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Honest status -->
   <section class="section">
     <div class="wrap">
       <div class="section-head">
-        <p class="kicker">Honest status</p>
+        <h2>A reader, not a vendor silo.</h2>
+        <p class="lead">Aliro provides the common access protocol. The ESP32 supplies the embedded platform. This project supplies the glue: NFC transport, credential storage, access policy, lock output, provisioning, configuration, and integrations.</p>
+      </div>
+      <div class="grid">
+        <article class="card"><h3>Phone / credential</h3><p>A wallet holding an Aliro credential &mdash; Apple, Google, or Samsung &mdash; begins the tap.</p></article>
+        <article class="card"><h3>NFC transport</h3><p>A PN532 frontend carries the ISO&nbsp;14443-4 interaction to the reader over SPI or I&sup2;C.</p></article>
+        <article class="card"><h3>Aliro reader</h3><p>Espressif&rsquo;s Aliro SDK handles authentication, transaction state, and credential identity.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
         <h2>What&rsquo;s verified, what&rsquo;s still open.</h2>
         <p class="lead">The docs separate what&rsquo;s implemented from what&rsquo;s actually been checked on hardware. That distinction matters more here than in most projects &mdash; this firmware opens a physical door.</p>
       </div>
-      <div class="grid two">
-        <article class="card">
-          <span class="status good">Verified on hardware</span>
+      <div class="rows">
+        <article>
+          <p class="fact-line"><strong>Status:</strong> verified on hardware</p>
           <h3>Apple Home + Aliro over Matter</h3>
           <p>Commissioned, credential provisioned, both transaction paths opened the lock. Home app lock/unlock, OTA rollback, MQTT and Home Assistant discovery all exercised on the same board.</p>
         </article>
-        <article class="card">
-          <span class="status warn">Known issue · disabled by default</span>
+        <article>
+          <p class="fact-line"><strong>Status:</strong> known issue, disabled by default</p>
           <h3>Apple Wallet Express Mode</h3>
           <p>The ECP beacon that wakes a locked phone has twice been found to desync the NFC bus on real hardware. It&rsquo;s implemented but off by default until the root cause is actually fixed, not just believed fixed.</p>
         </article>
-        <article class="card">
-          <span class="status idle">Untested</span>
+        <article>
+          <p class="fact-line"><strong>Status:</strong> untested</p>
           <h3>Google Wallet &amp; Samsung Wallet</h3>
-          <p>Samsung specifically needs a Matter-capable hub to administer the fabric &mdash; a bare Galaxy phone can&rsquo;t hold it. See <a style="color:var(--info)" href="roadmap.html">the roadmap</a> for what that actually requires.</p>
+          <p>Samsung specifically needs a Matter-capable hub to administer the fabric &mdash; a bare Galaxy phone can&rsquo;t hold it. See <a href="roadmap.html">the roadmap</a> for what that actually requires.</p>
         </article>
-        <article class="card">
-          <span class="status warn">Builds · not hardware-tested</span>
+        <article>
+          <p class="fact-line"><strong>Status:</strong> builds, not hardware-tested</p>
           <h3>ESP32-C3 / ESP32-S3</h3>
           <p>CI builds and releases firmware for both, and both fit their OTA slot. Neither has been flashed to a real board by this project yet.</p>
         </article>
@@ -142,40 +119,34 @@
     </div>
   </section>
 
-  <!-- Explore -->
-  <section class="section band">
+  <section class="section">
     <div class="wrap">
       <div class="section-head">
-        <p class="kicker">Explore</p>
-        <h2>A real project site, not one oversized README.</h2>
+        <h2>Explore the project.</h2>
       </div>
       <div class="grid">
-        <a class="card" href="architecture.html"><span class="explore-num">01 / DOCS</span><h3>Architecture <span class="arrow">→</span></h3><p>Component boundaries, transaction flow and design decisions.</p></a>
-        <a class="card" href="hardware.html"><span class="explore-num">02 / HARDWARE</span><h3>Hardware <span class="arrow">→</span></h3><p>ESP32 targets, NFC frontend, buses, lock output and board support tiers.</p></a>
-        <a class="card" href="first-test.html"><span class="explore-num">03 / TESTING</span><h3>First test <span class="arrow">→</span></h3><p>Flash a release or the browser flasher, then know what a healthy boot proves.</p></a>
-        <a class="card" href="web.html"><span class="explore-num">04 / WEB</span><h3>Web interface <span class="arrow">→</span></h3><p>Setup AP, REST API, WebSocket status, MQTT, OTA and authentication.</p></a>
-        <a class="card" href="roadmap.html"><span class="explore-num">05 / ROADMAP</span><h3>Roadmap <span class="arrow">→</span></h3><p>Completed milestones, current work, and the remaining unknowns.</p></a>
-        <a class="card" href="releases.html"><span class="explore-num">06 / VERSIONS</span><h3>Versions <span class="arrow">→</span></h3><p>v0.1 through v0.5, and what changed in each.</p></a>
-        <a class="card" href="about.html"><span class="explore-num">07 / PROJECT</span><h3>About <span class="arrow">→</span></h3><p>Purpose, foundations, licensing, and attribution.</p></a>
-        <a class="card" href="site/index.html"><span class="explore-num">08 / TOOL</span><h3>Browser flasher <span class="arrow">→</span></h3><p>Generate a reader identity and flash over WebSerial &mdash; no toolchain needed.</p></a>
+        <a class="card" href="architecture.html"><h3>Architecture</h3><p>Component boundaries, transaction flow and design decisions.</p></a>
+        <a class="card" href="hardware.html"><h3>Hardware</h3><p>ESP32 targets, NFC frontend, buses, lock output and board support tiers.</p></a>
+        <a class="card" href="first-test.html"><h3>First test</h3><p>Flash a release or build from source, then know what a healthy boot proves.</p></a>
+        <a class="card" href="web.html"><h3>Web interface</h3><p>Setup AP, REST API, WebSocket status, MQTT, OTA and authentication.</p></a>
+        <a class="card" href="roadmap.html"><h3>Roadmap</h3><p>Completed milestones, current work, and the remaining unknowns.</p></a>
+        <a class="card" href="releases.html"><h3>Versions</h3><p>v0.1 through v0.5, and what changed in each.</p></a>
       </div>
     </div>
   </section>
 
-  <!-- How a tap works -->
   <section class="section">
     <div class="wrap">
       <div class="section-head">
-        <p class="kicker">How a tap works</p>
         <h2>NFC in, decision out, lock fires.</h2>
         <p class="lead">Aliro transactions run ISO&nbsp;7816 APDUs over ISO&nbsp;14443-4 NFC. A device seen before uses the fast path; a new one runs the full handshake.</p>
       </div>
-      <div class="diagram" aria-label="Transaction flow diagram">
-        <div class="hop"><span class="from">PHONE / WATCH</span><p><strong>Tap begins.</strong> Wallet presents an Aliro credential over the NFC field.</p></div>
-        <div class="hop"><span class="from">NFC_TRANSPORT</span><p><strong>Poll / activate / exchange.</strong> The PN532 carries APDUs between antenna and firmware.</p></div>
-        <div class="hop"><span class="from">ALIRO_READER</span><p><strong>Session + authentication.</strong> The SDK verifies the credential and resolves its identity.</p></div>
-        <div class="hop"><span class="from">ACCESS_CONTROL</span><p><strong>Identity + policy + lock.</strong> The project checks the allow-list, then fires the lock GPIO.</p></div>
-      </div>
+      <ol class="flow" aria-label="Transaction flow">
+        <li><span class="who">PHONE / WATCH</span><p><strong>Tap begins.</strong> A wallet presents an Aliro credential over the NFC field.</p></li>
+        <li><span class="who">NFC_TRANSPORT</span><p><strong>Poll / activate / exchange.</strong> The PN532 carries APDUs between antenna and firmware.</p></li>
+        <li><span class="who">ALIRO_READER</span><p><strong>Session + authentication.</strong> The SDK verifies the credential and resolves its identity.</p></li>
+        <li><span class="who">ACCESS_CONTROL</span><p><strong>Identity + policy + lock.</strong> The project checks the allow-list, then fires the lock output.</p></li>
+      </ol>
       <div class="codeblock">
         <button class="copy-btn" type="button">Copy</button>
 <pre>Phone / watch
@@ -223,7 +194,7 @@
         <li><a href="roadmap.html">Roadmap</a></li>
         <li><a href="releases.html">Versions</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="site/index.html">Browser flasher</a></li>
+        <li><a href="https://github.com/Ruhanpaco/Aliro-homekey">GitHub ↗</a></li>
       </ul>
     </div>
   </div>

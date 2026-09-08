@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b0d10">
+<meta name="theme-color" content="#f4f2ec">
 <meta name="description" content="Aliro HomeKey release history: v0.1 through v0.5.">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://ruhanpaco.github.io/aliro-homekey/releases.html">
+<link rel="canonical" href="https://ruhanpaco.github.io/Aliro-homekey/releases.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Versions · Aliro HomeKey">
 <meta property="og:description" content="v0.1 through v0.5, and what changed in each.">
-<meta property="og:url" content="https://ruhanpaco.github.io/aliro-homekey/releases.html">
-<meta property="og:image" content="https://ruhanpaco.github.io/aliro-homekey/assets/aliro-mark.svg">
+<meta property="og:url" content="https://ruhanpaco.github.io/Aliro-homekey/releases.html">
+<meta property="og:image" content="https://ruhanpaco.github.io/Aliro-homekey/assets/aliro-mark.svg">
 <link rel="icon" href="assets/aliro-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,560;0,9..144,640;1,9..144,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=20260908">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=20260909">
 <title>Versions · Aliro HomeKey</title>
 </head>
 <body>
@@ -25,10 +25,10 @@
 <header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="index.html" aria-label="Aliro HomeKey home">
-      <img src="assets/aliro-mark.svg" alt="" width="30" height="30">
+      <img src="assets/aliro-mark.svg" alt="" width="28" height="28">
       <span>ALIRO <em>HOMEKEY</em></span>
     </a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">MENU</button>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
     <nav class="site-nav" id="primary-nav" aria-label="Primary">
       <a class="nav-link" href="index.html">Overview</a>
       <a class="nav-link" href="architecture.html">Architecture</a>
@@ -36,8 +36,7 @@
       <a class="nav-link" href="roadmap.html">Roadmap</a>
       <a class="nav-link" href="releases.html" aria-current="page">Versions</a>
       <span class="nav-cta">
-        <a class="btn ghost small" href="https://github.com/Ruhanpaco/Aliro-homekey">GitHub ↗</a>
-        <a class="btn primary small" href="site/index.html">Open Flasher</a>
+        <a class="btn primary small" href="https://github.com/Ruhanpaco/Aliro-homekey">GitHub ↗</a>
       </span>
     </nav>
   </div>
@@ -45,7 +44,6 @@
 
 <main id="main" class="wrap">
   <section class="page-hero">
-    <p class="crumbs"><a href="index.html">Home</a> / 06 · Versions</p>
     <h1>Five betas, <em>one working reader.</em></h1>
     <p class="lead">Every release is on <a href="https://github.com/Ruhanpaco/Aliro-homekey/releases">GitHub</a> with full notes and firmware for esp32, esp32c3, and esp32s3. This page is the short version.</p>
   </section>
@@ -72,7 +70,7 @@
         <h3>v0.2 [beta]</h3>
         <p>The first release that had actually run on hardware &mdash; v0.1 was written blind. Boots on its own, joins Wi-Fi through a setup portal, and updates itself over the air with a real rollback: a build that panics early or can&rsquo;t serve its own UI gets put back automatically at the next reset.</p>
       </article>
-      <article class="dim">
+      <article>
         <small>2026-08-14</small>
         <h3>v0.1 [beta] &mdash; superseded</h3>
         <p>Compiled for both targets and was published without ever having run on real hardware. It boot-looped on first power-up and its web UI couldn&rsquo;t load its own configuration. Both bugs were fixed in v0.2 the same day. Kept for history &mdash; don&rsquo;t flash it.</p>
@@ -80,15 +78,13 @@
     </div>
   </section>
 
-  <section class="section band">
+  <section class="section">
     <div class="section-head">
-      <p class="kicker">Get a build</p>
-      <h2>Three ways to get firmware on a board.</h2>
+      <h2>Get firmware on a board.</h2>
     </div>
     <div class="hero-actions">
       <a class="btn primary" href="https://github.com/Ruhanpaco/Aliro-homekey/releases">Browse releases ↗</a>
       <a class="btn ghost" href="first-test.html">Flashing instructions</a>
-      <a class="btn ghost" href="site/index.html">Browser flasher</a>
     </div>
   </section>
 </main>

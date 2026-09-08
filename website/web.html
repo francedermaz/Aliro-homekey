@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b0d10">
+<meta name="theme-color" content="#f4f2ec">
 <meta name="description" content="Aliro HomeKey web interface: setup access point, REST API, WebSocket status, MQTT and OTA.">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://ruhanpaco.github.io/aliro-homekey/web.html">
+<link rel="canonical" href="https://ruhanpaco.github.io/Aliro-homekey/web.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Web interface · Aliro HomeKey">
 <meta property="og:description" content="Setup AP, REST API, WebSocket status, MQTT, OTA and authentication.">
-<meta property="og:url" content="https://ruhanpaco.github.io/aliro-homekey/web.html">
-<meta property="og:image" content="https://ruhanpaco.github.io/aliro-homekey/assets/aliro-mark.svg">
+<meta property="og:url" content="https://ruhanpaco.github.io/Aliro-homekey/web.html">
+<meta property="og:image" content="https://ruhanpaco.github.io/Aliro-homekey/assets/aliro-mark.svg">
 <link rel="icon" href="assets/aliro-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,560;0,9..144,640;1,9..144,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=20260908">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=20260909">
 <title>Web interface · Aliro HomeKey</title>
 </head>
 <body>
@@ -25,10 +25,10 @@
 <header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="index.html" aria-label="Aliro HomeKey home">
-      <img src="assets/aliro-mark.svg" alt="" width="30" height="30">
+      <img src="assets/aliro-mark.svg" alt="" width="28" height="28">
       <span>ALIRO <em>HOMEKEY</em></span>
     </a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">MENU</button>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
     <nav class="site-nav" id="primary-nav" aria-label="Primary">
       <a class="nav-link" href="index.html">Overview</a>
       <a class="nav-link" href="architecture.html">Architecture</a>
@@ -36,8 +36,7 @@
       <a class="nav-link" href="roadmap.html">Roadmap</a>
       <a class="nav-link" href="releases.html">Versions</a>
       <span class="nav-cta">
-        <a class="btn ghost small" href="https://github.com/Ruhanpaco/Aliro-homekey">GitHub ↗</a>
-        <a class="btn primary small" href="site/index.html">Open Flasher</a>
+        <a class="btn primary small" href="https://github.com/Ruhanpaco/Aliro-homekey">GitHub ↗</a>
       </span>
     </nav>
   </div>
@@ -45,22 +44,19 @@
 
 <main id="main" class="wrap">
   <section class="page-hero">
-    <p class="crumbs"><a href="index.html">Home</a> / 04 · Web</p>
     <h1>Configure it <em>without a rebuild.</em></h1>
     <p class="lead">A hand-written single page app, embedded straight into the firmware &mdash; no npm, no bundler, no framework. It&rsquo;s the only way to change wiring, network, or lock settings once a board is out of reach of USB.</p>
   </section>
 
   <section class="section">
     <div class="section-head">
-      <p class="kicker">First boot</p>
       <h2>The setup access point.</h2>
       <p class="lead">With no Wi-Fi credentials stored, the reader starts its own network: <code class="inline">Aliro-Setup-XXXX</code>, password <code class="inline">aliro1234</code> by default. Join it and <code class="inline">http://192.168.4.1/</code> should open on its own.</p>
     </div>
   </section>
 
-  <section class="section band">
+  <section class="section">
     <div class="section-head">
-      <p class="kicker">REST API</p>
       <h2>What the UI actually talks to.</h2>
     </div>
     <div class="tablewrap">
@@ -75,30 +71,28 @@
         </tbody>
       </table>
     </div>
-    <p class="muted" style="font-size:13.5px;margin-top:16px">An empty password field in a config patch means &ldquo;keep the stored one&rdquo; &mdash; passwords are never echoed back to the browser.</p>
+    <p class="muted" style="font-size:14px;margin-top:16px">An empty password field in a config patch means &ldquo;keep the stored one&rdquo; &mdash; passwords are never echoed back to the browser.</p>
   </section>
 
   <section class="section">
     <div class="section-head">
-      <p class="kicker">Pages</p>
       <h2>Overview, hardware, network, MQTT, OTA, system.</h2>
     </div>
     <div class="grid">
-      <article class="card feature"><span class="step">Overview</span><h3>Live state</h3><p>Live lock state, last tap, and network status over the WebSocket.</p></article>
-      <article class="card feature"><span class="step">Hardware</span><h3>Pins &amp; buses</h3><p>NFC chip, bus, every pin, lock output and polarity &mdash; validated against the target chip before it&rsquo;s accepted.</p></article>
-      <article class="card feature"><span class="step">Network</span><h3>Wi-Fi</h3><p>Wi-Fi scan and join, plus the setup-AP fallback settings.</p></article>
-      <article class="card feature"><span class="step">MQTT</span><h3>Broker &amp; discovery</h3><p>Broker, credentials, TLS, topics, and Home Assistant discovery &mdash; off by default.</p></article>
-      <article class="card feature"><span class="step">OTA</span><h3>Safe updates</h3><p>Upload a <code class="inline">.bin</code>, watch progress, and get automatic rollback if the new image doesn&rsquo;t come up clean.</p></article>
-      <article class="card feature"><span class="step">System</span><h3>Auth &amp; diagnostics</h3><p>Optional HTTP Basic auth, device name, and diagnostics.</p></article>
+      <article class="card"><h3>Overview</h3><p>Live lock state, last tap, and network status over the WebSocket.</p></article>
+      <article class="card"><h3>Hardware</h3><p>NFC chip, bus, every pin, lock output and polarity &mdash; validated against the target chip before it&rsquo;s accepted.</p></article>
+      <article class="card"><h3>Network</h3><p>Wi-Fi scan and join, plus the setup-AP fallback settings.</p></article>
+      <article class="card"><h3>MQTT</h3><p>Broker, credentials, TLS, topics, and Home Assistant discovery &mdash; off by default.</p></article>
+      <article class="card"><h3>OTA</h3><p>Upload a <code class="inline">.bin</code>, watch progress, and get automatic rollback if the new image doesn&rsquo;t come up clean.</p></article>
+      <article class="card"><h3>System</h3><p>Optional HTTP Basic auth, device name, and diagnostics.</p></article>
     </div>
   </section>
 
-  <section class="section band">
+  <section class="section">
     <div class="section-head">
-      <p class="kicker">Security posture</p>
       <h2>Read this before it guards a real door.</h2>
     </div>
-    <div class="callout warn"><strong>Authentication is off by default.</strong> A username and password can be set from the System page, and every config and OTA endpoint refuses without it once it&rsquo;s on &mdash; but until you turn it on, anyone on the network can reconfigure the reader, and anyone who can reach it can send an unlock over MQTT if a broker is configured. Fine on a bench driving an LED; not fine on a door.</div>
+    <div class="callout"><strong>Authentication is off by default.</strong> A username and password can be set from the System page, and every config and OTA endpoint refuses without it once it&rsquo;s on &mdash; but until you turn it on, anyone on the network can reconfigure the reader, and anyone who can reach it can send an unlock over MQTT if a broker is configured. Fine on a bench driving an LED; not fine on a door.</div>
     <p class="lead">See <a href="https://github.com/Ruhanpaco/Aliro-homekey/blob/main/SECURITY.md">SECURITY.md</a> for the full list of known limitations and how to report a vulnerability.</p>
   </section>
 </main>

@@ -14,7 +14,7 @@
 
 **One reader. One standard. Multiple wallet ecosystems.**
 
-[Website](https://ruhanpaco.github.io/Aliro-homekey) · [Browser Flasher](https://ruhanpaco.github.io/Aliro-homekey) · [Architecture](docs/ARCHITECTURE.md) · [Roadmap](docs/ROADMAP.md) · [Releases](https://github.com/Ruhanpaco/Aliro-homekey/releases)
+[Website](https://ruhanpaco.github.io/Aliro-homekey) · [Architecture](docs/ARCHITECTURE.md) · [Roadmap](docs/ROADMAP.md) · [Releases](https://github.com/Ruhanpaco/Aliro-homekey/releases)
 
 </div>
 
@@ -45,7 +45,7 @@ This remains a **research/beta project, not a certified access-control product**
 
 ## Get firmware onto a board
 
-Four ways in — pick whichever fits.
+Three ways in — pick whichever fits.
 
 <details open>
 <summary><strong>Build from source</strong> — full control, requires the ESP-IDF toolchain</summary>
@@ -74,21 +74,6 @@ python -m esptool --chip esp32 write_flash 0x0 esp32.firmware.factory.bin
 # Or, over the device's own OTA page once it's already running:
 # open http://<device-ip>/#/ota and upload esp32.firmware.bin
 ```
-
-</details>
-
-<details>
-<summary><strong>Browser flasher</strong> — no toolchain, no CLI, generates a unique identity in-tab</summary>
-
-<div align="center">
-
-### [Open the Aliro HomeKey Browser Flasher →](https://ruhanpaco.github.io/Aliro-homekey)
-
-**WebSerial · Browser Crypto · No backend**
-
-</div>
-
-Generates a unique P-256 reader identity locally in the browser and writes it over WebSerial. Private keys never leave the tab. Needs desktop Chrome, Edge, or Opera.
 
 </details>
 
@@ -165,7 +150,7 @@ Typical hardware: an **ESP32-WROOM-32** (or other supported target), a **PN532**
 - **Access** — Aliro transactions, fast + standard paths, key-slot access decisions, lock/relay GPIO output
 - **Device** — browser config UI, Wi-Fi setup AP, NVS-backed config, OTA with rollback, GPIO validation
 - **Integrations** — Matter Door Lock endpoint, Aliro provisioning over Matter, MQTT, Home Assistant discovery
-- **Developer tools** — ESP-IDF based, browser flasher, serial diagnostics, per-board defaults, architecture docs
+- **Developer tools** — ESP-IDF based, serial diagnostics, per-board defaults, architecture docs
 
 ## Configuration
 
@@ -184,7 +169,7 @@ MQTT is optional and off by default. Enabled, it publishes lock state and tap ev
 
 ```text
 Aliro-homekey/
-├── website/                 # GitHub Pages: public site + browser flasher (site/)
+├── website/                 # GitHub Pages public site
 ├── main/                    # Firmware entry point (+ certs/: generated dev identity)
 ├── components/
 │   ├── app_config/          # Runtime configuration + NVS
