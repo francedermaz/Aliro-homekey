@@ -286,6 +286,14 @@ table.spec td:first-child { font-family: var(--font-mono); font-size: 13px; colo
 .notfound img { width: 88px; height: 88px; margin-bottom: 24px; }
 .notfound h1 { font-family: var(--font-display); font-size: clamp(48px, 8vw, 88px); margin: 0 0 10px; }
 
+/* Icons (single SVG sprite in assets/icons.svg) */
+.ic {
+  width: 23px; height: 23px; display: block;
+  color: var(--ink); flex: none;
+}
+.card .ic { margin-bottom: 14px; }
+.option .ic { margin-bottom: 14px; }
+
 /* Responsive */
 @media (max-width: 960px) {
   .hero { grid-template-columns: 1fr; gap: 36px; padding: 60px 0 48px; }

@@ -50,6 +50,7 @@
 
   <section class="section">
     <article class="option">
+      <svg class="ic" aria-hidden="true"><use href="assets/icons.svg#download"/></svg>
       <h2>Flash a release &mdash; esptool only.</h2>
       <p class="lead">Grab the matching pair from <a href="https://github.com/Ruhanpaco/Aliro-homekey/releases">Releases</a> for your target &mdash; <code class="inline">esp32</code>, <code class="inline">esp32c3</code>, or <code class="inline">esp32s3</code>.</p>
       <div class="codeblock">
@@ -63,6 +64,7 @@ python -m esptool --chip esp32 write_flash 0x0 esp32.firmware.factory.bin
     </article>
 
     <article class="option">
+      <svg class="ic" aria-hidden="true"><use href="assets/icons.svg#terminal"/></svg>
       <h2>Build from source &mdash; full control.</h2>
       <p class="lead">Install ESP-IDF 5.2&ndash;6.0 and make sure <code class="inline">idf.py</code> and <code class="inline">openssl</code> are on your PATH.</p>
       <div class="codeblock">

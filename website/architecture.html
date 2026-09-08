@@ -91,12 +91,12 @@ Browser ──HTTP──&gt; web_server ──&gt; app_config ──&gt; NVS
       <h2>The NFC chip can change without rewriting the reader.</h2>
     </div>
     <div class="grid">
-      <article class="card"><h3>nfc_transport</h3><p>PN532 is implemented today; PN7160 and ST25R3916 don&rsquo;t share its bus, driver, or quirks. The transport interface keeps those details isolated from everything above it.</p></article>
-      <article class="card"><h3>aliro_reader</h3><p>Espressif&rsquo;s Aliro SDK owns protocol state and cryptographic session handling. This project wraps it in a polling task rather than duplicating the protocol.</p></article>
-      <article class="card"><h3>access_control</h3><p>Credential lookup and the decision to unlock are policy, kept outside protocol code &mdash; room for schedules, revocation, and multiple locks later.</p></article>
-      <article class="card"><h3>app_config + net_manager</h3><p>Runtime configuration in NVS, Wi-Fi with a setup-AP fallback, and pin validation that refuses wiring that doesn&rsquo;t exist on the target chip.</p></article>
-      <article class="card"><h3>matter_lock</h3><p>Optional, compiled out unless enabled. Exposes a Matter Door Lock endpoint and the Aliro provisioning feature, so a controller can enroll credentials the standard way.</p></article>
-      <article class="card"><h3>mqtt_manager + web_server</h3><p>Lock state, tap events, and commands over MQTT with Home Assistant discovery; a REST API and embedded UI for everything that isn&rsquo;t provisioned over Matter.</p></article>
+      <article class="card"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#waves"/></svg><h3>nfc_transport</h3><p>PN532 is implemented today; PN7160 and ST25R3916 don&rsquo;t share its bus, driver, or quirks. The transport interface keeps those details isolated from everything above it.</p></article>
+      <article class="card"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#cpu"/></svg><h3>aliro_reader</h3><p>Espressif&rsquo;s Aliro SDK owns protocol state and cryptographic session handling. This project wraps it in a polling task rather than duplicating the protocol.</p></article>
+      <article class="card"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#lock"/></svg><h3>access_control</h3><p>Credential lookup and the decision to unlock are policy, kept outside protocol code &mdash; room for schedules, revocation, and multiple locks later.</p></article>
+      <article class="card"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#database"/></svg><h3>app_config + net_manager</h3><p>Runtime configuration in NVS, Wi-Fi with a setup-AP fallback, and pin validation that refuses wiring that doesn&rsquo;t exist on the target chip.</p></article>
+      <article class="card"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#key"/></svg><h3>matter_lock</h3><p>Optional, compiled out unless enabled. Exposes a Matter Door Lock endpoint and the Aliro provisioning feature, so a controller can enroll credentials the standard way.</p></article>
+      <article class="card"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#radio"/></svg><h3>mqtt_manager + web_server</h3><p>Lock state, tap events, and commands over MQTT with Home Assistant discovery; a REST API and embedded UI for everything that isn&rsquo;t provisioned over Matter.</p></article>
     </div>
   </section>
 
