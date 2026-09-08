@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b0d10">
+<meta name="description" content="Aliro HomeKey architecture: NFC transport, Aliro reader, access control, configuration and network integrations.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://ruhanpaco.github.io/aliro-homekey/architecture.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Architecture · Aliro HomeKey">
+<meta property="og:description" content="Component boundaries, transaction flow and design decisions.">
+<meta property="og:url" content="https://ruhanpaco.github.io/aliro-homekey/architecture.html">
+<meta property="og:image" content="https://ruhanpaco.github.io/aliro-homekey/assets/aliro-mark.svg">
+<link rel="icon" href="assets/aliro-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,560;0,9..144,640;1,9..144,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=20260908">
+<title>Architecture · Aliro HomeKey</title>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html" aria-label="Aliro HomeKey home">
+      <img src="assets/aliro-mark.svg" alt="" width="30" height="30">
+      <span>ALIRO <em>HOMEKEY</em></span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">MENU</button>
+    <nav class="site-nav" id="primary-nav" aria-label="Primary">
+      <a class="nav-link" href="index.html">Overview</a>
+      <a class="nav-link" href="architecture.html" aria-current="page">Architecture</a>
+      <a class="nav-link" href="hardware.html">Hardware</a>
+      <a class="nav-link" href="roadmap.html">Roadmap</a>
+      <a class="nav-link" href="releases.html">Versions</a>
+      <span class="nav-cta">
+        <a class="btn ghost small" href="https://github.com/Ruhanpaco/Aliro-homekey">GitHub ↗</a>
+        <a class="btn primary small" href="site/index.html">Open Flasher</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+  <section class="page-hero">
+    <p class="crumbs"><a href="index.html">Home</a> / 01 · Architecture</p>
+    <h1>One seam <em>per component.</em></h1>
+    <p class="lead">The firmware is split around the parts expected to change independently: NFC hardware, Aliro transactions, access policy, configuration, and network integrations. New work goes behind an existing seam, or gets a new one &mdash; not spread across three.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <p class="kicker">Transaction path</p>
+      <h2>From RF field to decision.</h2>
+    </div>
+    <div class="diagram" aria-label="Firmware data flow">
+      <div class="hop"><span class="from">NFC_TRANSPORT</span><p><strong>Poll / activate / exchange.</strong> Owns the PN532, the bus, and the RF field lifecycle.</p></div>
+      <div class="hop"><span class="from">ALIRO_READER</span><p><strong>Session + authentication.</strong> Wraps Espressif&rsquo;s Aliro SDK; owns protocol state and crypto sessions.</p></div>
+      <div class="hop"><span class="from">ACCESS_CONTROL</span><p><strong>Identity + policy + lock.</strong> Credential lookup and the unlock decision live here &mdash; separate from protocol code.</p></div>
+      <div class="hop"><span class="from">APP_CONFIG → NVS</span><p><strong>Persisted settings.</strong> Browser edits flow <span class="mono">web_server → app_config → NVS</span>; everything else reads from there at boot.</p></div>
+      <div class="hop"><span class="from">NET / MQTT / MATTER</span><p><strong>Optional integrations.</strong> Wi-Fi with setup-AP fallback, MQTT with Home Assistant discovery, and an optional Matter Door Lock endpoint.</p></div>
+    </div>
+    <div class="codeblock">
+      <button class="copy-btn" type="button">Copy</button>
+<pre>Phone / watch
+    │  ISO 14443-4 NFC
+    ▼
+┌─────────────────────┐
+│   nfc_transport      │  poll / activate / exchange
+└──────────┬───────────┘
+           │ APDUs
+           ▼
+┌─────────────────────┐
+│    aliro_reader       │  session + authentication
+└──────────┬───────────┘
+           │ credential + result
+           ▼
+┌─────────────────────┐
+│   access_control      │  identity + policy + lock
+└─────────────────────┘
+
+Browser ──HTTP──&gt; web_server ──&gt; app_config ──&gt; NVS
+                      │
+                 net_manager
+                      │
+                 MQTT / Matter</pre>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="section-head">
+      <p class="kicker">Why the boundaries</p>
+      <h2>The NFC chip can change without rewriting the reader.</h2>
+    </div>
+    <div class="grid">
+      <article class="card feature"><span class="step">nfc_transport</span><h3>Hardware isolation</h3><p>PN532 is implemented today; PN7160 and ST25R3916 don&rsquo;t share its bus, driver, or quirks. The transport interface keeps those details isolated from everything above it.</p></article>
+      <article class="card feature"><span class="step">aliro_reader</span><h3>Protocol ownership</h3><p>Espressif&rsquo;s Aliro SDK owns protocol state and cryptographic session handling. This project wraps it in a polling task rather than duplicating the protocol.</p></article>
+      <article class="card feature"><span class="step">access_control</span><h3>Policy, not protocol</h3><p>Credential lookup and the decision to unlock are policy, kept outside protocol code &mdash; room for schedules, revocation, and multiple locks later.</p></article>
+      <article class="card feature"><span class="step">app_config + net_manager</span><h3>Boot-time truth</h3><p>Runtime configuration in NVS, Wi-Fi with a setup-AP fallback, and pin validation that refuses wiring that doesn&rsquo;t exist on the target chip.</p></article>
+      <article class="card feature"><span class="step">matter_lock</span><h3>Optional Matter</h3><p>Compiled out unless enabled. Exposes a Matter Door Lock endpoint and the Aliro provisioning feature, so a controller can enroll credentials the standard way.</p></article>
+      <article class="card feature"><span class="step">mqtt_manager + web_server</span><h3>Operations layer</h3><p>Lock state, tap events, and commands over MQTT with Home Assistant discovery; a REST API and embedded UI for everything that isn&rsquo;t provisioned over Matter.</p></article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <p class="kicker">One tap</p>
+      <h2>The reader task owns the session.</h2>
+      <p class="lead">Polling, activation, session creation, credential lookup, exchange, and result handling happen in one controlled lifecycle. The result reaches access control only after the field is released.</p>
+    </div>
+    <div class="codeblock">
+      <button class="copy-btn" type="button">Copy</button>
+<pre>poll()
+  → activate()
+  → create Aliro session
+  → expedited transaction
+      ↳ NFC exchange
+      ↳ credential key-slot lookup
+  → exchange phase
+  → delete session
+  → deactivate NFC field
+  → access_control_on_reader_result()</pre>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="section-head">
+      <p class="kicker">Design constraints</p>
+      <h2>Some limits are intentional.</h2>
+    </div>
+    <div class="tablewrap">
+      <table class="spec">
+        <thead><tr><th>Constraint</th><th>Reason</th></tr></thead>
+        <tbody>
+          <tr><td>One reader session</td><td>The SDK is singleton-shaped, so callbacks safely route through module state rather than an instance handle.</td></tr>
+          <tr><td>Boot-time configuration</td><td>Changing a live SPI bus or lock GPIO mid-transaction is worse than requiring a restart.</td></tr>
+          <tr><td>NVS first</td><td>Reader identity, group information, and configuration need persistent storage before the protocol starts.</td></tr>
+          <tr><td>Network is optional</td><td>The reader stays a reader when Wi-Fi or a controller is unavailable &mdash; NFC access doesn&rsquo;t depend on the network being up.</td></tr>
+          <tr><td>One PN532, one task</td><td>The transport has exactly one physical chip behind it; anything that needs the bus goes through the same poll loop, sequentially.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="index.html" aria-label="Aliro HomeKey home">
+        <img src="assets/aliro-mark.svg" alt="" width="26" height="26">
+        <span>ALIRO <em>HOMEKEY</em></span>
+      </a>
+      <p>Architecture derived from <code class="inline">docs/ARCHITECTURE.md</code> in the repo.</p>
+    </div>
+    <div>
+      <h4>Docs</h4>
+      <ul>
+        <li><a href="architecture.html">Architecture</a></li>
+        <li><a href="hardware.html">Hardware</a></li>
+        <li><a href="first-test.html">First test</a></li>
+        <li><a href="web.html">Web interface</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Project</h4>
+      <ul>
+        <li><a href="roadmap.html">Roadmap</a></li>
+        <li><a href="releases.html">Versions</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="https://github.com/Ruhanpaco/Aliro-homekey/blob/main/docs/ARCHITECTURE.md">Source doc ↗</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>Aliro HomeKey · Apache-2.0 · <span data-year>2026</span></span>
+    <a href="https://github.com/Ruhanpaco/Aliro-homekey">GitHub ↗</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var btn = document.querySelector('.nav-toggle');
+  var nav = document.getElementById('primary-nav');
+  if (btn && nav) {
+    btn.addEventListener('click', function () {
+      var open = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+  document.querySelectorAll('[data-year]').forEach(function (el) {
+    el.textContent = new Date().getFullYear();
+  });
+  document.querySelectorAll('.codeblock').forEach(function (box) {
+    var b = box.querySelector('.copy-btn');
+    var pre = box.querySelector('pre');
+    if (b && pre) {
+      b.addEventListener('click', function () {
+        var done = function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1600); };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(pre.innerText).then(done, done);
+        }
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>

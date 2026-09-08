@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b0d10">
+<meta name="description" content="Flash Aliro HomeKey and understand what a healthy first boot proves.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://ruhanpaco.github.io/aliro-homekey/first-test.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="First test · Aliro HomeKey">
+<meta property="og:description" content="Three ways onto a board, and what a healthy boot proves.">
+<meta property="og:url" content="https://ruhanpaco.github.io/aliro-homekey/first-test.html">
+<meta property="og:image" content="https://ruhanpaco.github.io/aliro-homekey/assets/aliro-mark.svg">
+<link rel="icon" href="assets/aliro-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,560;0,9..144,640;1,9..144,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=20260908">
+<title>First test · Aliro HomeKey</title>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html" aria-label="Aliro HomeKey home">
+      <img src="assets/aliro-mark.svg" alt="" width="30" height="30">
+      <span>ALIRO <em>HOMEKEY</em></span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">MENU</button>
+    <nav class="site-nav" id="primary-nav" aria-label="Primary">
+      <a class="nav-link" href="index.html">Overview</a>
+      <a class="nav-link" href="architecture.html">Architecture</a>
+      <a class="nav-link" href="hardware.html">Hardware</a>
+      <a class="nav-link" href="roadmap.html">Roadmap</a>
+      <a class="nav-link" href="releases.html">Versions</a>
+      <span class="nav-cta">
+        <a class="btn ghost small" href="https://github.com/Ruhanpaco/Aliro-homekey">GitHub ↗</a>
+        <a class="btn primary small" href="site/index.html">Open Flasher</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+  <section class="page-hero">
+    <p class="crumbs"><a href="index.html">Home</a> / 03 · First test</p>
+    <h1>Three ways <em>onto a board.</em></h1>
+    <p class="lead">Pick whichever fits &mdash; build from source for full control, flash a release if you just want it running, or use the browser flasher for a unique identity with no toolchain at all.</p>
+  </section>
+
+  <section class="section">
+    <article class="option">
+      <span class="opt-tag">Option A · Easiest</span>
+      <h2>Browser flasher &mdash; no toolchain, no CLI.</h2>
+      <p class="lead">Generates a unique P-256 reader identity locally in your browser tab, builds an NVS partition image, and writes it over WebSerial. Private keys never leave the tab &mdash; there&rsquo;s no backend at all.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="site/index.html">Open the browser flasher →</a>
+      </div>
+      <p class="muted" style="font-size:13.5px">Needs desktop Chrome, Edge, or Opera &mdash; WebSerial isn&rsquo;t implemented anywhere else.</p>
+    </article>
+
+    <article class="option">
+      <span class="opt-tag">Option B · esptool only</span>
+      <h2>Flash a release.</h2>
+      <p class="lead">Grab the matching pair from <a href="https://github.com/Ruhanpaco/Aliro-homekey/releases">Releases</a> for your target &mdash; <code class="inline">esp32</code>, <code class="inline">esp32c3</code>, or <code class="inline">esp32s3</code>.</p>
+      <div class="codeblock">
+        <button class="copy-btn" type="button">Copy</button>
+<pre><span class="c"># Wipes the board and installs everything: bootloader, partitions, app</span>
+python -m esptool --chip esp32 write_flash 0x0 esp32.firmware.factory.bin
+
+<span class="c"># Or, over the device's own OTA page once it's already running:</span>
+<span class="c"># open http://&lt;device-ip&gt;/#/ota and upload esp32.firmware.bin</span></pre>
+      </div>
+    </article>
+
+    <article class="option">
+      <span class="opt-tag">Option C · Full control</span>
+      <h2>Build from source.</h2>
+      <p class="lead">Install ESP-IDF 5.2&ndash;6.0 and make sure <code class="inline">idf.py</code> and <code class="inline">openssl</code> are on your PATH.</p>
+      <div class="codeblock">
+        <button class="copy-btn" type="button">Copy</button>
+<pre>idf.py set-target esp32
+idf.py -D SDKCONFIG_DEFAULTS="sdkconfig.defaults;boards/sdkconfig.defaults.esp32" build
+idf.py -p /dev/ttyUSB0 flash monitor</pre>
+      </div>
+      <p class="muted" style="font-size:13.5px">The first build generates a development reader identity under <code class="inline">main/certs/</code>. It&rsquo;s gitignored and for development only &mdash; read <code class="inline">main/certs/README.md</code> before using it for anything else.</p>
+    </article>
+  </section>
+
+  <section class="section band">
+    <div class="section-head">
+      <p class="kicker">What a healthy boot looks like</p>
+      <h2>What each line actually proves.</h2>
+    </div>
+    <div class="codeblock">
+      <button class="copy-btn" type="button">Copy</button>
+<pre>I aliro/app     : Aliro HomeKey starting
+I aliro/access  : credential 'dev-credential' registered
+I aliro/access  : lock output on GPIO 2 (active high), unlock 3000 ms
+I nfc/pn532     : PN532 found, firmware 1.6
+I aliro/reader  : reader ready, waiting for a device
+I aliro/net     : joined 'YourNetwork' -- configuration UI at http://192.168.x.x/</pre>
+    </div>
+    <div class="tablewrap">
+      <table class="spec">
+        <thead><tr><th>Line</th><th>What it actually proves</th></tr></thead>
+        <tbody>
+          <tr><td>credential registered</td><td>The Aliro SDK initialized and a credential&rsquo;s key slot was derived &mdash; not that a phone can use it yet.</td></tr>
+          <tr><td>PN532 found, firmware X.Y</td><td>The chip answered on the configured SPI/I&sup2;C pins. Wiring and bus selection agree with the physical switch.</td></tr>
+          <tr><td>reader ready, waiting for a device</td><td>The poll loop is running. It does not yet mean a tap will be recognized &mdash; that needs an enrolled credential.</td></tr>
+          <tr><td>joined &lsquo;&hellip;&rsquo; &mdash; configuration UI at &hellip;</td><td>Wi-Fi connected and the web server is listening. Open that address to configure hardware, network, and lock settings.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warn"><strong>If you see <code class="inline">no PN532 answered on the configured SPI/I&sup2;C pins</code></strong> instead &mdash; almost always the module is on 5V instead of 3.3V, or its mode switch is still on I&sup2;C/HSU while the config says SPI. See <a href="hardware.html">Hardware</a> for the wiring table.</div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="index.html" aria-label="Aliro HomeKey home">
+        <img src="assets/aliro-mark.svg" alt="" width="26" height="26">
+        <span>ALIRO <em>HOMEKEY</em></span>
+      </a>
+      <p>See also <code class="inline">docs/FIRST-TEST.md</code> in the repo.</p>
+    </div>
+    <div>
+      <h4>Docs</h4>
+      <ul>
+        <li><a href="architecture.html">Architecture</a></li>
+        <li><a href="hardware.html">Hardware</a></li>
+        <li><a href="first-test.html">First test</a></li>
+        <li><a href="web.html">Web interface</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Project</h4>
+      <ul>
+        <li><a href="roadmap.html">Roadmap</a></li>
+        <li><a href="releases.html">Versions</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="https://github.com/Ruhanpaco/Aliro-homekey/blob/main/docs/FIRST-TEST.md">Source doc ↗</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>Aliro HomeKey · Apache-2.0 · <span data-year>2026</span></span>
+    <a href="https://github.com/Ruhanpaco/Aliro-homekey">GitHub ↗</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var btn = document.querySelector('.nav-toggle');
+  var nav = document.getElementById('primary-nav');
+  if (btn && nav) {
+    btn.addEventListener('click', function () {
+      var open = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+  document.querySelectorAll('[data-year]').forEach(function (el) {
+    el.textContent = new Date().getFullYear();
+  });
+  document.querySelectorAll('.codeblock').forEach(function (box) {
+    var b = box.querySelector('.copy-btn');
+    var pre = box.querySelector('pre');
+    if (b && pre) {
+      b.addEventListener('click', function () {
+        var done = function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1600); };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(pre.innerText).then(done, done);
+        }
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>

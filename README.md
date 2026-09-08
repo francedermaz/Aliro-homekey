@@ -184,7 +184,7 @@ MQTT is optional and off by default. Enabled, it publishes lock state and tap ev
 
 ```text
 Aliro-homekey/
-├── site/                    # GitHub Pages: browser flasher + project website
+├── website/                 # GitHub Pages: public site + browser flasher (site/)
 ├── main/                    # Firmware entry point (+ certs/: generated dev identity)
 ├── components/
 │   ├── app_config/          # Runtime configuration + NVS
